@@ -1,0 +1,30 @@
+
+CREATE TABLE IF NOT EXISTS wallets (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    telephone VARCHAR(20) UNIQUE NOT NULL,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    solde NUMERIC(15,2) DEFAULT 0.00 CHECK (solde >= 0)
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    wallet_id INTEGER REFERENCES wallets(id) ON DELETE CASCADE,
+    code VARCHAR(50) NOT NULL,
+    montant NUMERIC(15,2) NOT NULL CHECK (montant > 0),
+    date_heure TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    type VARCHAR(10) CHECK (type IN ('DEPOT', 'RETRAIT'))
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255),
+    role VARCHAR(20)
+);
+
+INSERT INTO users (nom, email, password, role) VALUES 
+('Admin', 'aissa@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN')
+ON CONFLICT DO NOTHING;
