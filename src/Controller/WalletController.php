@@ -79,7 +79,7 @@ class WalletController extends AbstractController {
             if (Validator::validate()) {
                 $success = WalletService::deposit($telephone, $montant);
                 if (!$success) {
-                    // On peut ajouter un message d'erreur plus tard
+                    // message d'erreur
                 }
             }
 
@@ -101,7 +101,7 @@ class WalletController extends AbstractController {
             if (Validator::validate()) {
                 $success = WalletService::withdraw($telephone, $montant);
                 if (!$success) {
-                    // Peut être solde insuffisant
+                    // le solde peut être insuffisant
                 }
             }
 
